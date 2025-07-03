@@ -4,3 +4,29 @@
 * {
     font-family: "Outfit", sans-serif;
 }
+
+@layer base {}
+
+.course-details-heading-small {
+    @apply text-[26px] leading-[34px];
+}
+
+.course-details-heading-large {
+    @apply text-[36px] leading-[44px];
+}
+
+.home-heading-small {
+    @apply text-[28px] leading-[34px];
+}
+
+.home-heading-large {
+    @apply text-[48px] leading-[56px];
+}
+
+.default {
+    @apply text-[15px] leading-[21px];
+}
+
+.grid-auto {
+    @apply grid grid-cols-[repeat(auto-fit, _minmax(200px, _1fr))];
+}

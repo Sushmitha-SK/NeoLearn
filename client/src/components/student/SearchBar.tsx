@@ -8,14 +8,12 @@ const SearchBar = ({ data }: any) => {
 
     const [input, setInput] = useState<string>(data ? data : '')
 
-
     const onSearchHandler = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         if (input.trim()) {
             navigate('/course-list/' + input);
         }
     };
-
 
     return (
 

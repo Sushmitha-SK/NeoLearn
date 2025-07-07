@@ -57,7 +57,7 @@ export const purchaseCourse = async (req, res) => {
 
         const currency = process.env.CURRENCY.toLowerCase()
 
-        //Creatinf line items for Stripe
+        //Creating line items for Stripe
         const line_items = [{
             price_data: {
                 currency,
@@ -78,7 +78,7 @@ export const purchaseCourse = async (req, res) => {
                 purchaseId: newPurchase._id.toString()
             }
         })
-     
+
         res.json({ success: true, session_url: session.url })
 
     } catch (error) {
@@ -89,7 +89,7 @@ export const purchaseCourse = async (req, res) => {
 
 //Update User Course Progress
 
-export const updateUserCouresProgess = async (req, res) => {
+export const updateUserCourseProgress = async (req, res) => {
     try {
         const userId = req.auth.userId
         const { courseId, lectureId } = req.body

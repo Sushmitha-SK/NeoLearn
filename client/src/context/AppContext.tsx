@@ -50,7 +50,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     }
 
     const fetchUserData = async () => {
-
+        console.log('USER ROLE', JSON.stringify(user && user.public_metadata?.role === 'educator'))
         if (user && user.public_metadata?.role === 'educator') {
             setIsEducator(true);
         }

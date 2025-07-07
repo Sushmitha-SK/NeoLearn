@@ -6,6 +6,8 @@ import { assets } from '../../assets/assets'
 import humanizeDuration from 'humanize-duration'
 import Footer from '../../components/student/Footer'
 import YouTube from 'react-youtube'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const CourseDetails = () => {
     const { id } = useParams()
@@ -14,19 +16,70 @@ const CourseDetails = () => {
     const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false)
     const [playerData, setPlayerData] = useState(null)
 
-    const { allCourses, calculateRating, calculateChapterTime, calculateCourseDuration, calculateNoOfLectures, currency } = useContext(AppContext)
+    const { calculateRating, calculateChapterTime, calculateCourseDuration, calculateNoOfLectures, currency, backendUrl, userData, getToken } = useContext(AppContext)
+
+
+    const fetchCourseData = async () => {
+
+        try {
+            const { data } = await axios.get(backendUrl + '/api/course/' + id)
+            if (data.success) {
+                setCourseData(data.courseData)
+            } else {
+                toast.error(data.message)
+            }
+
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || error.message)
+            } else if (error instanceof Error) {
+                toast.error(error.message)
+            } else {
+                toast.error('An unknown error occurred')
+            }
+        }
+    }
+
+    const enrollCourse = async () => {
+        try {
+            if (!userData) {
+                return toast.warn('Login to Enroll')
+            }
+            if (isAlreadyEnrolled) {
+                return toast.warn('Already Enrolled')
+            }
+
+            const token = await getToken();
+
+            const { data } = await axios.post(backendUrl + '/api/user/purchase', {
+                courseId: courseData._id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            if (data.success) {
+                const { session_url } = data
+                window.location.replace(session_url)
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+
+        }
+    }
 
     useEffect(() => {
-        const fetchCourseData = async () => {
-            const findCourse = allCourses.find(course => course._id === id)
-            setCourseData(findCourse)
-        }
         fetchCourseData()
-    }, [id, allCourses])
+    }, [])
 
-    const enrollCourse = () => {
+    useEffect(() => {
+        if (userData && courseData) {
+            setIsAlreadyEnrolled(userData.enrolledCourses.includes(courseData._id))
+        }
+    }, [userData, courseData])
 
-    }
 
     const toggleSection = (index) => {
         setOpenSections((prev) => (
@@ -69,7 +122,7 @@ const CourseDetails = () => {
                         </p>
                         <p>{courseData.enrolledStudents.length} {courseData.enrolledStudents.length > 1 ? 'students' : 'student'}</p>
                     </div>
-                    <p className='text-sm'>Course by <span className='text-blue-600 underline'>{courseData.educator.name}</span></p>
+                    <p className='text-sm'>Course by <span className='text-blue-600 underline'>{courseData.educator?.name}</span></p>
                     <div className='pt-8 text-gray-800'>
                         <h2 className='text-xl font-semibold'>Course Structure</h2>
                         <div className='pt-5'>

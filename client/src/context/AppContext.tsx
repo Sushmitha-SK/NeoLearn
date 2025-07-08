@@ -22,7 +22,6 @@ export const AppContext = createContext<AppContextType>(defaultContextValue);
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const backendUrl = 'https://neo-learn-server.vercel.app'
-
     const currency = import.meta.env.VITE_CURRENCY
     const navigate = useNavigate()
 

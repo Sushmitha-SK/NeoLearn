@@ -61,6 +61,25 @@ export const clerkWebhooks = async (req, res) => {
 //Stripe Payment
 const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
 
+export const stripeWebhooks = async (request, response) => {
+    const sig = request.headers['stripe-signature'];
+    let event;
+    console.log('STRIPE sig', JSON.stringify(sig))
+    try {
+        event = stripeInstance.webhooks.constructEvent(
+            request.body,
+            sig,
+            process.env.STRIPE_WEBHOOK_SECRET
+        );
+
+
+    } catch (err) {
+        console.error("Webhook Error:", err.message);
+        return response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    console.log('session stripe event data', JSON.stringify(event))
+
 if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
 
@@ -87,5 +106,6 @@ if (event.type === 'checkout.session.completed') {
     await purchase.save();
 
     return response.status(200).json({ received: true });
+}
 }
 

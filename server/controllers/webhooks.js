@@ -61,33 +61,21 @@ export const clerkWebhooks = async (req, res) => {
 //Stripe Payment
 const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-export const stripeWebhooks = async (request, response) => {
-    const sig = request.headers['stripe-signature'];
-    let event;
-    console.log('STRIPE sig', JSON.stringify(sig))
-    try {
-        event = stripeInstance.webhooks.constructEvent(
-            request.body,
-            sig,
-            process.env.STRIPE_WEBHOOK_SECRET
-        );
+if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
 
-
-    } catch (err) {
-        console.error("Webhook Error:", err.message);
-        return response.status(400).send(`Webhook Error: ${err.message}`);
+    const purchaseId = session.metadata?.purchaseId;
+    if (!purchaseId) {
+        return response.status(400).send("Missing purchaseId in metadata.");
     }
-
-    console.log('session stripe event data', JSON.stringify(event))
-
-   if (event.type === 'payment_intent.succeeded') {
-    const paymentIntent = event.data.object;
-    const purchaseId = paymentIntent.metadata?.purchaseId;
-    if (!purchaseId) return response.status(400).send("Missing purchaseId in metadata.");
 
     const purchase = await Purchase.findById(purchaseId);
     const user = await User.findById(purchase.userId);
     const course = await Course.findById(purchase.courseId);
+
+    if (!user || !course) {
+        return response.status(404).send("User or Course not found.");
+    }
 
     course.enrolledStudents.push(user._id);
     await course.save();
@@ -97,11 +85,7 @@ export const stripeWebhooks = async (request, response) => {
 
     purchase.status = 'completed';
     await purchase.save();
+
+    return response.status(200).json({ received: true });
 }
-
-    response.status(200).json({ received: true });
-
-
-
-};
 

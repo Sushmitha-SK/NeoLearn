@@ -57,6 +57,7 @@ export const clerkWebhooks = async (req, res) => {
 }
 
 
+
 //Stripe Payment
 const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -71,16 +72,17 @@ export const stripeWebhooks = async (request, response) => {
             process.env.STRIPE_WEBHOOK_SECRET
         );
 
-        console.log('STRIPE event', JSON.stringify(event))
+
     } catch (err) {
         console.error("Webhook Error:", err.message);
         return response.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    console.log('STRIPE EVENT', JSON.stringify(event))
+    console.log('session stripe event data', JSON.stringify(event))
 
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object;
+        console.log('session stripe data', JSON.stringify(session))
 
         const purchaseId = session.metadata?.purchaseId;
         if (!purchaseId) return response.status(400).send("Missing purchaseId in metadata.");
@@ -88,6 +90,7 @@ export const stripeWebhooks = async (request, response) => {
         const purchase = await Purchase.findById(purchaseId);
         const user = await User.findById(purchase.userId);
         const course = await Course.findById(purchase.courseId);
+        console.log('session stripe purchase', JSON.stringify(purchase))
 
         // Update enrollment
         course.enrolledStudents.push(user._id);
@@ -101,7 +104,8 @@ export const stripeWebhooks = async (request, response) => {
     }
 
     response.status(200).json({ received: true });
+
+
+
 };
-
-
 

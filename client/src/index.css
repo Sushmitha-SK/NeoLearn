@@ -5,6 +5,8 @@
     font-family: "Outfit", sans-serif;
 }
 
+/* color-bgPrimary: #F4F6FB */
+
 @layer base {
     html {
         scroll-behavior: smooth;
@@ -113,3 +115,5 @@
 .rich-text li {
     margin-bottom: 8px;
 }
+
+

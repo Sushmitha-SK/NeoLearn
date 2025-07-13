@@ -80,28 +80,24 @@ export const stripeWebhooks = async (request, response) => {
 
     console.log('session stripe event data', JSON.stringify(event))
 
-    if (event.type === 'checkout.session.completed') {
-        const session = event.data.object;
-        console.log('session stripe data', JSON.stringify(session))
+   if (event.type === 'payment_intent.succeeded') {
+    const paymentIntent = event.data.object;
+    const purchaseId = paymentIntent.metadata?.purchaseId;
+    if (!purchaseId) return response.status(400).send("Missing purchaseId in metadata.");
 
-        const purchaseId = session.metadata?.purchaseId;
-        if (!purchaseId) return response.status(400).send("Missing purchaseId in metadata.");
+    const purchase = await Purchase.findById(purchaseId);
+    const user = await User.findById(purchase.userId);
+    const course = await Course.findById(purchase.courseId);
 
-        const purchase = await Purchase.findById(purchaseId);
-        const user = await User.findById(purchase.userId);
-        const course = await Course.findById(purchase.courseId);
-        console.log('session stripe purchase', JSON.stringify(purchase))
+    course.enrolledStudents.push(user._id);
+    await course.save();
 
-        // Update enrollment
-        course.enrolledStudents.push(user._id);
-        await course.save();
+    user.enrolledCourses.push(course._id);
+    await user.save();
 
-        user.enrolledCourses.push(course._id);
-        await user.save();
-
-        purchase.status = 'completed';
-        await purchase.save();
-    }
+    purchase.status = 'completed';
+    await purchase.save();
+}
 
     response.status(200).json({ received: true });
 

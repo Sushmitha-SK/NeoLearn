@@ -11,7 +11,6 @@ const MyCourses = () => {
     const [courses, setCourses] = useState(null)
 
     const fetchEducatorCourses = async () => {
-        // setCourses(allCourses)
         try {
             const token = await getToken()
             const { data } = await axios.get(backendUrl + '/api/educator/courses', {

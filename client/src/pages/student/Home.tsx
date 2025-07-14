@@ -7,8 +7,8 @@ import CallToAction from '../../components/student/CallToAction'
 import Footer from '../../components/student/Footer'
 import AboutUs from '../../components/student/AboutUs'
 
-
 const Home = () => {
+
     return (
         <div className='flex flex-col items-center space-y-7 text-center'>
             <Hero />
@@ -23,3 +23,4 @@ const Home = () => {
 }
 
 export default Home
+

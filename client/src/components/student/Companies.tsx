@@ -13,6 +13,9 @@ const Companies = () => {
                 <img src={assets.paypal_logo} alt="PayPal" className='w-20 md:w-28' />
 
             </div>
+
+
+
         </div>
     )
 }

@@ -5,6 +5,16 @@
     font-family: "Outfit", sans-serif;
 }
 
+
+
+@theme {
+    --font-display: "Outfit", "san-serif";
+    --color-primary: #F4F6FB;
+    --color-secondary: #4f46e5;
+    --color-cardBg: #F7F7FB;
+}
+
+
 @layer base {
     html {
         scroll-behavior: smooth;
@@ -42,6 +52,12 @@
 
 .course-card {
     @apply max-w-[424px]
+}
+
+
+
+.input-base {
+    @apply w-full rounded-lg focus:outline-none border border-gray-200 px-5 py-3 outline-none text-gray-900 placeholder-gray-400 text-sm font-normal focus:ring-2 focus:ring-gray-100 justify-start items-center gap-2 inline-flex;
 }
 
 

@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { dummyCourses } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import humanizeDuration from 'humanize-duration'
 import { useAuth, useUser } from "@clerk/clerk-react";
@@ -44,20 +43,20 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
                 toast.error(data.message)
             }
         } catch (error) {
-            toast.error(data.message)
+            toast.error(error.message)
+
         }
     }
 
     const fetchUserData = async () => {
-        console.log('USER ROLE', JSON.stringify(user && user.public_metadata?.role === 'educator'))
-        if (user && user.public_metadata?.role === 'educator') {
-            setIsEducator(true);
+        if (user && user.publicMetadata?.role === 'educator') {
+            setIsEducator(() => {
+                return true;
+            });
         }
 
         try {
             const token = await getToken();
-
-
             const { data } = await axios.get(backendUrl + '/api/user/data', {
                 headers: { Authorization: `Bearer ${token}` }
             })

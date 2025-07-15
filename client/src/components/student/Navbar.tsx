@@ -50,13 +50,13 @@ const Navbar = () => {
                 ${isCourseListPage ? 'bg-white' : 'bg-cyan-100/70'}`}>
                 <img src={assets.logo} onClick={() => navigate('/')} alt="Logo" className='w-28 lg:w-32 cursor-pointer' />
                 <div className='hidden md:flex items-center gap-5 text-gray-500'>
-                    <div className='flex items-center gap-5'>
+                    <div className='flex items-center gap-5 '>
                         {user &&
                             <>
-                                <button onClick={becomeEducator}>
+                                <button onClick={becomeEducator} className=' hover:text-blue-600 cursor-pointer'>
                                     {isEducator ? 'Educator Dashboard' : 'Become Educator'}
                                 </button>
-                                | <Link to="/my-enrollments">My Enrollments</Link>
+                                | <Link to="/my-enrollments" className=' hover:text-blue-600'>My Enrollments</Link>
                             </>}
                     </div >
                     {user ? <UserButton /> :

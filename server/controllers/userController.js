@@ -1,6 +1,7 @@
 import User from "../models/User.js"
 import Course from "../models/Course.js"
 import { Purchase } from "../models/Purchase.js"
+import { CourseProgress } from "../models/CourseProgress.js";
 import Stripe from 'stripe'
 
 //Get User Data
@@ -78,7 +79,7 @@ export const purchaseCourse = async (req, res) => {
             }
         })
 
-        
+
         res.json({ success: true, session_url: session.url })
 
     } catch (error) {
@@ -97,12 +98,12 @@ export const updateUserCourseProgress = async (req, res) => {
         const progressData = await CourseProgress.findOne({ userId, courseId })
 
         if (progressData) {
-            if (progressData.lectureCompletd.includes(lectureId)) {
+            if (progressData.lectureCompleted.includes(lectureId)) {
                 return res.json({ success: true, message: 'Lecture Already Completed' })
             }
-            progressData.lectureCompletd.push(lectureId)
+            progressData.lectureCompleted.push(lectureId)
 
-            await progressData.sava()
+            await progressData.save()
         } else {
             await CourseProgress.create({
                 userId,

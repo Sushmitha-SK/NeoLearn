@@ -32,7 +32,7 @@ const CoursesList = () => {
                         <h1 className='text-4xl font-semibold text-gray-800'>Course List</h1>
                         <p className='text-gray-500'>
                             <span className='text-blue-600 cursor-pointer' onClick={() => navigate('/')}>Home</span>
-                            /
+                            {' '}/{' '}
                             <span>Course List</span>
                         </p>
                     </div>
@@ -49,9 +49,12 @@ const CoursesList = () => {
                     {filteredCourse.map((course, index) => <CourseCard key={index} course={course} />)}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }
 
 export default CoursesList
+
+
+

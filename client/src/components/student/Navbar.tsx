@@ -1,93 +1,3 @@
-// import React, { useContext } from 'react'
-// import { assets } from '../../assets/assets'
-// import { Link } from 'react-router-dom'
-// import { useClerk, UserButton, useUser } from '@clerk/clerk-react'
-// import { AppContext } from '../../context/AppContext'
-// import axios from 'axios'
-// import { toast } from 'react-toastify'
-
-// const Navbar = () => {
-
-
-//     const { navigate, isEducator, backendUrl, setIsEducator, getToken } = useContext(AppContext)
-
-
-//     const isCourseListPage = location.pathname.includes('/course-list');
-
-//     const { openSignIn } = useClerk()
-//     const { user } = useUser()
-
-//     const becomeEducator = async () => {
-//         try {
-//             if (isEducator) {
-//                 // navigate('/')
-//                 navigate('/educator')
-//                 return;
-//             }
-
-//             const token = await getToken()
-
-//             const { data } = await axios.get(backendUrl + '/api/educator/update-role', {
-//                 headers: {
-//                     Authorization: `Bearer ${token}`
-//                 }
-//             })
-
-//             if (data.success) {
-//                 setIsEducator(true)
-//                 toast.success(data.message)
-//             }
-
-
-//         } catch (error) {
-//             toast.error(error.message)
-//         }
-//     }
-
-//     return (
-//         <>
-//             <div className={`flex items-center justify-between px-4 sm:px-10 md:px-14 lg:px-36  border-gray-500 py-4
-//                 ${isCourseListPage ? 'bg-white' : 'bg-lightBackground'}`}>
-//                 <img src={assets.logo} onClick={() => navigate('/')} alt="Logo" className='w-28 lg:w-32 cursor-pointer' />
-//                 <div className='hidden md:flex items-center gap-5 text-gray-500'>
-//                     <div className='flex items-center gap-5 '>
-//                         {user &&
-//                             <>
-//                                 <button onClick={becomeEducator} className=' hover:text-primaryBlue cursor-pointer'>
-//                                     {isEducator ? 'Educator Dashboard' : 'Become Educator'}
-//                                 </button>
-//                                 | <Link to="/my-enrollments" className=' hover:text-primaryBlue'>My Enrollments</Link>
-//                             </>}
-//                     </div >
-//                     {user ? <UserButton /> :
-//                         <button onClick={() => openSignIn()} className='bg-primaryBlue text-white 
-//                     px-5 py-2 rounded-full'>Create Account</button>}
-//                 </div>
-
-//                 {/* For Phone screens */}
-//                 <div className='md:hidden flex items-center gap-2 sm:gap-5 text-gray-500'>
-//                     <div className='flex items-center gap-1 sm:gap-2 max-sm:text-xs'>
-//                         {user &&
-//                             <>
-//                                 <button onClick={becomeEducator}>{isEducator ? 'Educator Dashboard' : 'Become Educator'}</button>
-//                                 | <Link to='/my-enrollments'>My Enrollments</Link>
-//                             </>
-//                         }
-//                     </div>
-//                     {user ? <UserButton /> :
-//                         <button onClick={() => openSignIn()}>
-//                             <img src={assets.user_icon} alt="" />
-//                         </button>}
-
-//                 </div>
-//             </div >
-//         </>
-//     )
-// }
-
-// export default Navbar
-
-
 import React, { useContext, useEffect, useState } from 'react';
 import { assets } from "../../assets/assets";
 import { Link, useLocation } from "react-router-dom";
@@ -96,10 +6,7 @@ import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-/**
- * Sticky Navbar that attaches to the top of the viewport on scroll.
- * Adds a subtle shadow once the user scrolls past 10 px to separate it from the content.
- */
+
 const Navbar = () => {
   const {
     navigate,
@@ -117,7 +24,7 @@ const Navbar = () => {
 
   const [hasShadow, setHasShadow] = useState(false);
 
-  // Add / remove shadow based on scroll position
+
   useEffect(() => {
     const handleScroll = () => {
       setHasShadow(window.scrollY > 10);
@@ -153,12 +60,10 @@ const Navbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-shadow ${
-        hasShadow ? "shadow-md" : "shadow-none"
-      } ${isCourseListPage ? "bg-white" : "bg-lightBackground"}`}
+      className={`sticky top-0 z-50 transition-shadow ${hasShadow ? "shadow-md" : "shadow-none"
+        } ${isCourseListPage ? "bg-white" : "bg-lightBackground"}`}
     >
       <nav className="flex items-center justify-between px-4 sm:px-10 md:px-14 lg:px-36 border-b border-gray-200 py-4">
-        {/* Logo */}
         <img
           src={assets.logo}
           onClick={() => navigate("/")}
@@ -166,7 +71,6 @@ const Navbar = () => {
           className="w-28 lg:w-32 cursor-pointer"
         />
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-5 text-gray-500">
           {user && (
             <>
@@ -187,14 +91,13 @@ const Navbar = () => {
           ) : (
             <button
               onClick={() => openSignIn()}
-              className="bg-primaryBlue text-white px-5 py-2 rounded-full"
+              className="bg-primaryBlue hover:bg-secondaryHoverBlue text-white px-5 py-2 rounded-full"
             >
-              Create Account
+              Sign in
             </button>
           )}
         </div>
 
-        {/* Mobile */}
         <div className="md:hidden flex items-center gap-2 sm:gap-5 text-gray-500">
           {user && (
             <>

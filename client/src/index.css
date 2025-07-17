@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 @import "tailwindcss";
 
 * {
@@ -16,6 +18,7 @@
     --color-buttonBackground: #f66962;
     --color-primaryBlue: #37AFE1;
     --color-secondaryBlue: #4CC9FE;
+    --color-secondaryHoverBlue: #2A94C2;
 }
 
 

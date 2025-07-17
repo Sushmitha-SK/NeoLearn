@@ -53,7 +53,7 @@ const AboutUs = () => {
                             </div>
                         </div>
                         <div className="w-full sm:w-auto">
-                            <button className="w-full sm:w-fit px-5 py-3 bg-primaryBlue hover:bg-secondaryBlue transition-all duration-300 rounded-lg shadow justify-center items-center flex">
+                            <button className="w-full sm:w-fit px-5 py-3 bg-primaryBlue hover:bg-secondaryHoverBlue transition-all duration-300 rounded-lg shadow justify-center items-center flex">
                                 <span className="text-white text-sm font-medium">Explore NeoLearn</span>
                             </button>
                         </div>

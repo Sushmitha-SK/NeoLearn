@@ -8,7 +8,7 @@ const CallToAction = () => {
             <h1 className='text-xl md:text-4xl text-gray-800 font-semibold'>Learn anything, anytime, anywhere</h1>
             <p className='text-gray-500 sm:text-sm'>Incididunt sint fugiat pariatur cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur commodo do ea.</p>
             <div className='flex items-cente font-medium gap-6 mt-4'>
-                <button className='px-10 py-3 rounded-md text-white bg-primaryBlue hover:bg-secondaryBlue'>
+                <button className='px-10 py-3 rounded-md text-white bg-primaryBlue hover:bg-secondaryHoverBlue'>
                     Get started
                 </button>
                 <button className='flex items-center gap-2'>

@@ -5,16 +5,23 @@ import { Link } from 'react-router-dom'
 
 const CourseCard = ({ course }: any) => {
     const { currency, calculateRating }: any = useContext(AppContext)
-
     const rating = Math.floor(calculateRating(course))
+    const discountedPrice = (course.coursePrice - (course.discount * course.coursePrice) / 100).toFixed(2)
 
     return (
-        <Link to={'/course/' + course._id} onClick={() => scrollTo(0, 0)}
-            className='border border-gray-500/30 pb-6 overflow-hidden rounded-lg'>
-            <img className='w-full' src={course.courseThumbnail} alt="" />
-            <div className='p-3 text-left'>
-                <h3 className='text-base font-semibold'>{course.courseTitle}</h3>
-                <p className='text-gray-500'>{course.educator?.name}</p>
+        <Link
+            to={`/course/${course._id}`}
+            onClick={() => scrollTo(0, 0)}
+            className='group border border-gray-200 rounded-2xl overflow-hidden shadow-sm bg-white'
+        >
+            <img
+                src={course.courseThumbnail}
+                alt={course.courseTitle}
+                className='w-full h-40 object-cover'
+            />
+            <div className='p-4 space-y-2 text-left'>
+                <h3 className='text-lg font-semibold text-gray-800 truncate'>{course.courseTitle}</h3>
+                <p className='text-sm text-gray-500'>{course.educator?.name}</p>
                 <div className='flex items-center space-x-2'>
                     <p>{calculateRating(course)}</p>
                     <div className='flex'>
@@ -30,8 +37,9 @@ const CourseCard = ({ course }: any) => {
                     <p className='text-gray-500'>{course.courseRatings.length}</p>
                 </div>
                 <p className='text-base font-semibold text-gray-800'>{currency}{(course.coursePrice - course.discount * course.coursePrice / 100).toFixed(2)}</p>
-            </div>
 
+
+            </div>
         </Link>
     )
 }

@@ -122,7 +122,7 @@ const CourseDetails = () => {
                         </p>
                         <p>{courseData.enrolledStudents.length} {courseData.enrolledStudents.length > 1 ? 'students' : 'student'}</p>
                     </div>
-                    <p className='text-sm'>Course by <span className='text-blue-600 underline'>{courseData.educator?.name}</span></p>
+                    <p className='text-sm'>Course by <span className='text-primaryBlue underline'>{courseData.educator?.name}</span></p>
                     <div className='pt-8 text-gray-800'>
                         <h2 className='text-xl font-semibold'>Course Structure</h2>
                         <div className='pt-5'>
@@ -221,7 +221,7 @@ const CourseDetails = () => {
                             </div>
                         </div>
 
-                        <button onClick={enrollCourse} className='md:mt-6 mt-4 w-full py-3 rounded bg-blue-600 text-white font-medium'>{isAlreadyEnrolled ? 'Already Enrolled' : 'Enroll Now'}</button>
+                        <button onClick={enrollCourse} className='md:mt-6 mt-4 w-full py-3 rounded bg-primaryBlue hover:bg-secondaryHoverBlue text-white font-medium'>{isAlreadyEnrolled ? 'Already Enrolled' : 'Enroll Now'}</button>
 
                         <div className='pt-6'>
                             <p className='md:text-xl text-lg font-medium text-gray-800'>What's in the course?</p>
@@ -247,3 +247,4 @@ const CourseDetails = () => {
 }
 
 export default CourseDetails
+

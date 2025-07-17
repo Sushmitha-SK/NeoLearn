@@ -4,11 +4,11 @@ import SearchBar from './SearchBar'
 
 const Hero = () => {
     return (
-        <div className='flex flex-col items-center justify-center w-full md:pt-36 pt-20 px-7 md:px-0 space-y-7 text-center bg-gradient-to-b from-cyan-100/70'>
+        <div className='flex flex-col items-center justify-center w-full md:pt-36 pt-20 px-7 md:px-0 space-y-7 text-center bg-gradient-to-b from-lightBackground'>
             <div className="text-center md:text-center max-w-3xl">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl text-black">
                     Empower your future with the courses designed to{" "}
-                    <span className="block font-bold text-blue-600 mt-1 relative">
+                    <span className="block font-bold text-primaryBlue mt-1 relative">
                         fit your choice.
                         <img src={assets.sketch} alt="sketch" className='md:block hidden absolute -bottom-7 right-0' />
                     </span>
@@ -24,6 +24,11 @@ const Hero = () => {
 
             <SearchBar />
         </div>
+
+
+
+
+
     )
 }
 

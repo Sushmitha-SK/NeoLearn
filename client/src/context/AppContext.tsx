@@ -10,6 +10,25 @@ import type { Course, User } from "../types/interfaces";
 interface AppContextType {
 }
 
+
+// interface AppContextType {
+//   // Existing...
+//   allCourses: Course[];
+//   fetchAllCourses: (search?: string, page?: number, limit?: number, sort?: string, order?: string) => Promise<void>;
+//   searchInput: string;
+//   setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+//   page: number;
+//   setPage: React.Dispatch<React.SetStateAction<number>>;
+//   limit: number;
+//   setLimit: React.Dispatch<React.SetStateAction<number>>;
+//   sort: string;
+//   setSort: React.Dispatch<React.SetStateAction<string>>;
+//   order: string;
+//   setOrder: React.Dispatch<React.SetStateAction<string>>;
+//  totalPages: number;
+//   setTotalPages: React.Dispatch<React.SetStateAction<number>>;
+// }
+
 interface AppContextProviderProps {
     children: ReactNode;
 }
@@ -20,8 +39,7 @@ const defaultContextValue: AppContextType = {
 export const AppContext = createContext<AppContextType>(defaultContextValue);
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-    // const backendUrl = 'https://neo-learn-server.vercel.app'
-    const backendUrl = 'http://localhost:5000'
+    const backendUrl = 'https://neo-learn-server.vercel.app'
     const currency = import.meta.env.VITE_CURRENCY
     const navigate = useNavigate()
 
@@ -32,22 +50,48 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const [allCourses, setAllCourses] = useState<Course[]>([]);
     const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
     const [userData, setUserData] = useState<User | null>(null);
+    const [searchInput, setSearchInput] = useState<string>("");
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(8); // Adjust per row count
+    const [sort, setSort] = useState("createdAt");
+    const [order, setOrder] = useState("desc");
+    const [totalPages, setTotalPages] = useState<number>(1);
+
 
     // Fetch all courses
-    const fetchAllCourses = async () => {
+
+    const fetchAllCourses = async (
+        search: string = "",
+        page: number = 1,
+        limit: number = 10,
+        sort: string = "createdAt",
+        order: string = "desc"
+    ) => {
         try {
-            const { data } = await axios.get(backendUrl + '/api/course/all');
+            const { data } = await axios.get(
+                `${backendUrl}/api/course/all`,
+                {
+                    params: {
+                        search,
+                        page,
+                        limit,
+                        sort,
+                        order
+                    }
+                }
+            );
 
             if (data.success) {
-                setAllCourses(data.courses)
+                setAllCourses(data.courses);
+                setTotalPages(data.totalPages);
             } else {
-                toast.error(data.message)
+                toast.error(data.message);
             }
-        } catch (error) {
-            toast.error(error.message)
-
+        } catch (error: any) {
+            toast.error(error.message);
         }
-    }
+    };
+
 
     const fetchUserData = async () => {
         if (user && user.publicMetadata?.role === 'educator') {
@@ -128,14 +172,14 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
                 toast.error(data.message)
             }
         } catch (error) {
-            toast.error(error.message)
+            // toast.error(error.message)
+            toast.error((error as Error).message)
         }
     }
 
     useEffect(() => {
-        fetchAllCourses()
-    }, [])
-
+        fetchAllCourses(searchInput, page, limit, sort, order);
+    }, [searchInput, page, limit, sort, order]);
 
     useEffect(() => {
         if (user) {
@@ -148,7 +192,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const value: AppContextType = {
         currency, allCourses, navigate, calculateRating,
         isEducator, setIsEducator, calculateChapterTime, calculateCourseDuration, calculateNoOfLectures,
-        enrolledCourses, setEnrolledCourses, fetchUserEnrolledCourses, backendUrl, userData, setUserData, getToken, fetchAllCourses
+        enrolledCourses, setEnrolledCourses, fetchUserEnrolledCourses, backendUrl, userData, setUserData, getToken, fetchAllCourses,
+        searchInput, setSearchInput, page, setPage, limit, setLimit, sort, setSort, order, setOrder, totalPages, setTotalPages
     };
 
     return (

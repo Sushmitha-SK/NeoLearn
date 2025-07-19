@@ -64,7 +64,7 @@ const Dashboard = () => {
           <table className="w-full text-sm text-left text-gray-700">
             <thead className="bg-gray-100 sticky top-0">
               <tr>
-                <th className="px-4 py-3 hidden sm:table-cell">#</th>
+                <th className="px-4 py-3 hidden sm:table-cell text-center">#</th>
                 <th className="px-4 py-3">Student Name</th>
                 <th className="px-4 py-3">Course Title</th>
               </tr>

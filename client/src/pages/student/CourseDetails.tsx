@@ -18,7 +18,6 @@ const CourseDetails = () => {
 
     const { calculateRating, calculateChapterTime, calculateCourseDuration, calculateNoOfLectures, currency, backendUrl, userData, getToken } = useContext(AppContext)
 
-
     const fetchCourseData = async () => {
 
         try {

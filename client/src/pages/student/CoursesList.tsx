@@ -74,10 +74,9 @@ const CoursesList = () => {
                             src={assets.cross_icon}
                             alt="clear"
                             className='w-2 h-2 cursor-pointer hover:scale-110 transition-transform duration-150'
-                            // onClick={() => navigate('/course-list')}
                             onClick={() => {
                                 setSearchInput("");
-                                navigate("/course-list/", { replace: true }); // replaces current history and updates params
+                                navigate("/course-list/", { replace: true }); 
                             }}
                         />
                     </div>

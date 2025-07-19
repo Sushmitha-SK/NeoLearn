@@ -66,6 +66,42 @@
 }
 
 
+.scrolltop {
+    position: fixed;
+    bottom: -100%;
+    right: 5rem;
+    background-color: var(--color-primary);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    color: var(--color-primaryBlue);
+    transition: var(--transition);
+    animation: scrolltopAnimation 2s linear infinite;
+    z-index: var(--zindex-fixed);
+    visibility: hidden;
+}
+
+.scrolltop--show {
+    bottom: 5rem;
+    visibility: visible;
+}
+
+@keyframes scrolltopAnimation {
+    0% {
+        box-shadow: 0px 0px 0px 10px rgba(72, 166, 167, 0.4);
+    }
+
+    100% {
+        box-shadow: 0px 0px 0px 40px rgb(113 67 245 / 1%);
+
+    }
+}
+
+
 .rich-text {
     font-size: 15px;
     color: #7A7B7D;

@@ -7,7 +7,7 @@ const CoursesSection = () => {
     const { allCourses } = useContext(AppContext)
 
     return (
-        <div className='py-16 md:px-40 px-8'>
+        <div className='py-16 md:px-40 px-8' id="courses">
             <h2 className=' text-4xl font-semibold text-gray-800 text-center'>Learn from the best</h2>
             <p className="text-center text-gray-600 mt-4 md:text-base">
                 Discover our top-rated courses across various categories.

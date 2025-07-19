@@ -9,6 +9,10 @@ const MyEnrollments = () => {
     const { enrolledCourses, calculateCourseDuration, calculateNoOfLectures, navigate, getToken, backendUrl, userData, fetchUserEnrolledCourses } = useContext(AppContext)
     const [progressArray, setProgressArray] = useState([])
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const getCourseProgress = async () => {
         try {
             const token = await getToken();

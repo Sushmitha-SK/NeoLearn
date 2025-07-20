@@ -1,4 +1,5 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import Hero from '../../components/student/Hero'
 import Companies from '../../components/student/Companies'
 import CoursesSection from '../../components/student/CoursesSection'
@@ -13,11 +14,7 @@ const Home = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 100) {
-                setShowScrollTop(true);
-            } else {
-                setShowScrollTop(false);
-            }
+            setShowScrollTop(window.scrollY > 100);
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -26,34 +23,87 @@ const Home = () => {
         };
     }, []);
 
-    const handleScrollToTop = () => [
+    const handleScrollToTop = () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
-        })
-    ]
+        });
+    };
+
+    const sectionVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0 },
+    };
 
 
     return (
         <div className='flex flex-col items-center space-t-7 text-center'>
             <Hero />
-            <Companies />
-            <AboutUs />
-            <CoursesSection />
-            <Testimonials />
-            <CallToAction />
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ amount: 0.2 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                variants={sectionVariants}
+            >
+
+                <Companies />
+            </motion.div>
+
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ amount: 0.2 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                variants={sectionVariants}
+            >
+
+                <AboutUs />
+            </motion.div>
+
+
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ amount: 0.2 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                variants={sectionVariants}
+            >
+                <CoursesSection />
+            </motion.div>
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ amount: 0.2 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                variants={sectionVariants}
+            >
+                <Testimonials />
+            </motion.div>
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ amount: 0.2 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                variants={sectionVariants}
+            >
+                <CallToAction />
+            </motion.div>
             <Footer />
-            <a
+
+            <motion.a
                 href="#scrolltop"
                 id="scrolltop"
-                className={`scrolltop ${showScrollTop ? 'scrolltop--show' : ''}`}
+                className={`fixed bottom-6 right-6 p-2 bg-gray-200 dark:bg-gray-800 rounded-full shadow-lg transition-opacity duration-300 ${showScrollTop ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={handleScrollToTop}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Scroll to Top"
             >
-                <TiArrowSortedUp className="w-6 h-6" />
-            </a>
+                <TiArrowSortedUp className="w-6 h-6 text-black dark:text-white" />
+            </motion.a>
         </div>
-    )
-}
+    );
+};
 
-export default Home
-
+export default Home;

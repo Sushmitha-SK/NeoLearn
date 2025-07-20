@@ -6,7 +6,7 @@ NeoLearn is a modern full-stack e-learning platform where educators can create a
 
 ## 🌐 Live URL & Repository
 
-- **Frontend Live Application**: [http://localhost:5173/](http://localhost:5173/) 
+- **Frontend Live Application**: [https://neo-learn-space.vercel.app/](https://neo-learn-space.vercel.app/)
 - **Backend API**: [https://neo-learn-server.vercel.app/](https://neo-learn-server.vercel.app/)
 - **GitHub Repository**: [https://github.com/Sushmitha-SK/NeoLearn.git](https://github.com/Sushmitha-SK/NeoLearn.git)
 
@@ -33,6 +33,8 @@ NeoLearn is a modern full-stack e-learning platform where educators can create a
 - **My Courses**: Displays a paginated list of all courses created by the educator, showing the title, thumbnail, earnings, student count, and publish date. Data is fetched securely and rendered with a clean, responsive table layout for easy management.
 
 - **Students Enrolled**: Shows a paginated list of enrolled students with their names, course titles, and enrollment dates—helping educators track engagement easily.
+
+- **Contact Form with Web3Forms**: A fully functional contact form powered by Web3Forms allows users to reach out directly from the web app. No backend logic required—submissions are sent securely via Web3Forms API with built-in spam protection and email delivery.
 
 - **Responsive Design**: Ensures the app adapts smoothly to different screen sizes, providing an optimal experience on all devices.
 
@@ -186,7 +188,7 @@ Make sure you have the following installed:
 
 ---
 
-### 1️⃣ Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Sushmitha-SK/NeoLearn.git
@@ -195,7 +197,7 @@ cd NeoLearn
 
 ---
 
-### 2️⃣ Install Dependencies
+### 2. Install Dependencies
 
 #### Frontend
 
@@ -213,7 +215,7 @@ npm install
 
 ---
 
-### 3️⃣ Set Up Environment Variables
+### 3. Set Up Environment Variables
 
 #### Frontend (`client/.env`)
 
@@ -243,7 +245,7 @@ CURRENCY=your_currency_symbol
 
 ---
 
-### 4️⃣ Start the Development Servers
+### 4. Start the Development Servers
 
 #### Backend
 
@@ -261,7 +263,7 @@ npm run dev
 
 ---
 
-### 5️⃣ Visit the App
+### 5. Visit the App
 
 Now open your browser and go to:
 

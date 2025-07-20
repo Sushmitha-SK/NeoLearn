@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import { Line } from 'rc-progress'
 import Footer from '../../components/student/Footer'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import type { ProgressArray } from '../../types/interfaces'
+
 
 const MyEnrollments = () => {
     const { enrolledCourses, calculateCourseDuration, calculateNoOfLectures, navigate, getToken, backendUrl, userData, fetchUserEnrolledCourses } = useContext(AppContext)
-    const [progressArray, setProgressArray] = useState([])
+    const [progressArray, setProgressArray] = useState<ProgressArray[]>([])
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -32,7 +34,7 @@ const MyEnrollments = () => {
             )
             setProgressArray(tempProgressArray);
         } catch (error) {
-            toast.error(error.message);
+            toast.error((error as Error).message);
         }
     }
 
@@ -65,8 +67,8 @@ const MyEnrollments = () => {
                         <tbody>
                             {enrolledCourses.length === 0 ? (
                                 <tr>
-                                    <td colSpan="4" className="text-center py-10 text-gray-500">
-                                        You haven’t enrolled in any courses yet.
+                                    <td colSpan={4} className="text-center py-10 text-gray-500">
+                                        You haven't enrolled in any courses yet.
                                     </td>
                                 </tr>
                             ) : (

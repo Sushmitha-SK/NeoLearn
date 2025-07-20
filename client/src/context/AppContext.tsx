@@ -8,35 +8,72 @@ import { toast } from "react-toastify";
 import type { Course, User } from "../types/interfaces";
 
 interface AppContextType {
+    navigate: ReturnType<typeof useNavigate>;
+    isEducator: boolean;
+    backendUrl: string;
+    setIsEducator: (value: boolean) => void;
+    getToken: () => Promise<string>;
+    allCourses: Course[];
+    setAllCourses: React.Dispatch<React.SetStateAction<Course[]>>;
+    searchInput: string;
+    setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+    page: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+    sort: string;
+    setSort: React.Dispatch<React.SetStateAction<string>>;
+    order: string;
+    setOrder: React.Dispatch<React.SetStateAction<string>>;
+    totalPages: number;
+    setTotalPages: React.Dispatch<React.SetStateAction<number>>;
+    currency: string;
+
+    calculateRating: (course: { courseRatings: { rating: number }[] }) => number;
+    calculateChapterTime: (chapter: { chapterContent: { lectureDuration: number }[] }) => string;
+    calculateCourseDuration: (course: { courseContent: { chapterContent: { lectureDuration: number }[] }[] }) => string;
+    calculateNoOfLectures: (course: { courseContent: { chapterContent: any[] }[] }) => number;
+
+    userData: User | null;
+    enrolledCourses: Course[];
+    fetchUserEnrolledCourses: () => Promise<void>;
 }
-
-
-// interface AppContextType {
-//   // Existing...
-//   allCourses: Course[];
-//   fetchAllCourses: (search?: string, page?: number, limit?: number, sort?: string, order?: string) => Promise<void>;
-//   searchInput: string;
-//   setSearchInput: React.Dispatch<React.SetStateAction<string>>;
-//   page: number;
-//   setPage: React.Dispatch<React.SetStateAction<number>>;
-//   limit: number;
-//   setLimit: React.Dispatch<React.SetStateAction<number>>;
-//   sort: string;
-//   setSort: React.Dispatch<React.SetStateAction<string>>;
-//   order: string;
-//   setOrder: React.Dispatch<React.SetStateAction<string>>;
-//  totalPages: number;
-//   setTotalPages: React.Dispatch<React.SetStateAction<number>>;
-// }
 
 interface AppContextProviderProps {
     children: ReactNode;
 }
 
 const defaultContextValue: AppContextType = {
+    navigate: () => { },
+    isEducator: false,
+    backendUrl: '',
+    setIsEducator: () => { },
+    getToken: async () => '',
+    allCourses: [],
+    setAllCourses: () => { },
+    searchInput: '',
+    setSearchInput: () => { },
+    page: 1,
+    setPage: () => { },
+    sort: '',
+    setSort: () => { },
+    order: '',
+    setOrder: () => { },
+    totalPages: 1,
+    setTotalPages: () => { },
+    currency: 'USD',
+    calculateRating: () => 0,
+    calculateChapterTime: () => '',
+    calculateCourseDuration: () => '',
+    calculateNoOfLectures: () => 0,
+    userData: null,
+    enrolledCourses: [],
+    fetchUserEnrolledCourses: async () => { }
 };
 
 export const AppContext = createContext<AppContextType>(defaultContextValue);
+
+
+// export const AppContext = createContext<AppContextType | undefined>(undefined);
+
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const backendUrl = 'https://neo-learn-server.vercel.app'
@@ -112,17 +149,17 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
                 toast.error(data.message)
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error((error as Error).message)
         }
     }
 
     // Function to calculate average rating of course
-    const calculateRating = (course) => {
+    const calculateRating = (course: { courseRatings: any[]; }) => {
         if (course.courseRatings.length === 0) {
             return 0;
         }
         let totalRating = 0
-        course.courseRatings.forEach(rating => {
+        course.courseRatings.forEach((rating: { rating: number; }) => {
             totalRating += rating.rating
         })
         return Math.floor(totalRating / course.courseRatings.length)
@@ -130,25 +167,25 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
     //Function to calculate chapter time
 
-    const calculateChapterTime = (chapter) => {
+    const calculateChapterTime = (chapter: { chapterContent: any[]; }) => {
         let time = 0
-        chapter.chapterContent.map((lecture) => time += lecture.lectureDuration)
+        chapter.chapterContent.map((lecture: { lectureDuration: number; }) => time += lecture.lectureDuration)
         return humanizeDuration(time * 60 * 1000, { units: ["h", "m"] })
     }
 
     //Function to calculate course duration
 
-    const calculateCourseDuration = (course) => {
+    const calculateCourseDuration = (course: { courseContent: any[]; }) => {
         let time = 0
-        course.courseContent.map((chapter) => chapter.chapterContent.map((lecture) => time += lecture.lectureDuration))
+        course.courseContent.map((chapter: { chapterContent: any[]; }) => chapter.chapterContent.map((lecture: { lectureDuration: number; }) => time += lecture.lectureDuration))
         return humanizeDuration(time * 60 * 1000, { units: ["h", "m"] })
     }
 
     //Function to calculate no of lectures in the course
 
-    const calculateNoOfLectures = (course) => {
+    const calculateNoOfLectures = (course: { courseContent: any[]; }) => {
         let totalLectures = 0;
-        course.courseContent.forEach(chapter => {
+        course.courseContent.forEach((chapter: { chapterContent: string | any[]; }) => {
             if (Array.isArray(chapter.chapterContent)) {
                 totalLectures += chapter.chapterContent.length
             }
@@ -189,7 +226,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     }, [user])
 
 
-    const value: AppContextType = {
+    const value: any = {
         currency, allCourses, navigate, calculateRating,
         isEducator, setIsEducator, calculateChapterTime, calculateCourseDuration, calculateNoOfLectures,
         enrolledCourses, setEnrolledCourses, fetchUserEnrolledCourses, backendUrl, userData, setUserData, getToken, fetchAllCourses,

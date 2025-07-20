@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import SearchBar from '../../components/student/SearchBar'
 import { useParams } from 'react-router-dom'
 import CourseCard from '../../components/student/CourseCard'
 import { assets } from '../../assets/assets'
 import Footer from '../../components/student/Footer'
+import type { Course } from '../../types/interfaces'
 
 const CoursesList = () => {
 
     const { navigate, allCourses, searchInput, setSearchInput, page, setPage, sort, setSort, order, setOrder, totalPages } = useContext(AppContext)
     const { input } = useParams()
 
-    const [filteredCourse, setfilteredCourse] = useState([])
+    const [filteredCourse, setfilteredCourse] = useState<Course[]>([])
 
     useEffect(() => {
         if (input) {
@@ -34,12 +35,13 @@ const CoursesList = () => {
                 <div className='flex md:flex-row flex-col gap-6 items-start justify-between w-full'>
                     <div>
                         <h1 className='text-4xl font-semibold text-gray-800'>Course List</h1>
-                        <p className='text-gray-500 mt-2'>
-                            <span className='text-blue-600 cursor-pointer' onClick={() => navigate('/')}>Home</span>
+                        <p className='text-gray-500 mt-3'>
+                            <span className='text-primaryBlue cursor-pointer' onClick={() => navigate('/')}>Home</span>
                             {' '}/{' '}
                             <span>Course List</span>
                         </p>
                     </div>
+
                     <SearchBar data={searchInput} />
                 </div>
                 <div className="flex flex-wrap gap-4 items-center mt-6">
@@ -76,7 +78,7 @@ const CoursesList = () => {
                             className='w-2 h-2 cursor-pointer hover:scale-110 transition-transform duration-150'
                             onClick={() => {
                                 setSearchInput("");
-                                navigate("/course-list/", { replace: true }); 
+                                navigate("/course-list/", { replace: true });
                             }}
                         />
                     </div>

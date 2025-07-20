@@ -32,7 +32,7 @@ const Footer = () => {
                 </div>
             </div>
             <p className='py-4 text-center text-xs md:text-sm text-white/60'>
-                Copyright 2025 © NeoLearn. All Rights Reserved.
+                Copyright {new Date().getFullYear()} © NeoLearn. All Rights Reserved.
             </p>
         </footer>
     )

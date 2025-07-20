@@ -32,14 +32,9 @@ const Testimonials = () => {
                                 {testimonial.feedback}
                             </p>
                         </div>
-
                     </div>
                 ))}
-
-
-
             </div>
-
         </div>
     )
 }

@@ -3,14 +3,15 @@ import React, {
     useEffect,
     useRef,
     useState,
-    KeyboardEvent,
 } from 'react'
+import type { KeyboardEvent } from 'react'
 import uniqid from 'uniqid'
 import Quill from 'quill'
 import { assets } from '../../assets/assets'
 import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import type { Chapter } from '../../types/interfaces'
 
 
 const FormField = ({ label, children }: { label: string; children: React.ReactNode }) => (
@@ -34,7 +35,7 @@ const useEsc = (handler: () => void) => {
 const AddCourse = () => {
     const { backendUrl, getToken } = useContext(AppContext)
 
-    const quillRef = useRef<Quill>()
+    const quillRef = useRef<Quill | null>(null);
     const editorRef = useRef<HTMLDivElement>(null)
 
     const [courseTitle, setCourseTitle] = useState('')
@@ -42,7 +43,7 @@ const AddCourse = () => {
     const [discount, setDiscount] = useState<number>(0)
     const [image, setImage] = useState<File | null>(null)
 
-    const [chapters, setChapters] = useState<any[]>([])
+    const [chapters, setChapters] = useState<Chapter[]>([])
     const [showModal, setShowModal] = useState(false)
     const [currentChapterId, setCurrentChapterId] = useState<string | null>(null)
 
@@ -82,8 +83,8 @@ const AddCourse = () => {
     }
 
     const addLecture = () => {
-        setChapters((prev) =>
-            prev.map((chapter) =>
+        setChapters((prev: any) =>
+            prev.map((chapter: Chapter) =>
                 chapter.chapterId === currentChapterId
                     ? {
                         ...chapter,

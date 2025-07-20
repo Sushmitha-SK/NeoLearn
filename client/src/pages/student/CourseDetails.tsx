@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { AppContext } from '../../context/AppContext'
 import Loading from '../../components/student/Loading'
@@ -8,13 +8,14 @@ import Footer from '../../components/student/Footer'
 import YouTube from 'react-youtube'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import type { ExtendedCourse } from '../../types/interfaces'
 
 const CourseDetails = () => {
     const { id } = useParams()
-    const [courseData, setCourseData] = useState(null)
-    const [openSections, setOpenSections] = useState({})
+    const [courseData, setCourseData] = useState<ExtendedCourse | null>(null)
+    const [openSections, setOpenSections] = useState<Record<number, boolean>>({})
     const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false)
-    const [playerData, setPlayerData] = useState(null)
+    const [playerData, setPlayerData] = useState<{ videoId: string } | null>(null)
 
     const { calculateRating, calculateChapterTime, calculateCourseDuration, calculateNoOfLectures, currency, backendUrl, userData, getToken } = useContext(AppContext)
 
@@ -51,7 +52,7 @@ const CourseDetails = () => {
             const token = await getToken();
 
             const { data } = await axios.post(backendUrl + '/api/user/purchase', {
-                courseId: courseData._id
+                courseId: courseData?._id
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -80,7 +81,7 @@ const CourseDetails = () => {
     }, [userData, courseData])
 
 
-    const toggleSection = (index) => {
+    const toggleSection = (index: number) => {
         setOpenSections((prev) => (
             {
                 ...prev,
@@ -146,7 +147,7 @@ const CourseDetails = () => {
                                                             {lecture.isPreviewFree &&
                                                                 <p className='text-blue-500 cursor-pointer'
                                                                     onClick={() => setPlayerData({
-                                                                        videoId: lecture.lectureUrl.split('/').pop()
+                                                                        videoId: lecture.lectureUrl.split('/').pop() || ''
                                                                     })}
                                                                 >Preview</p>}
                                                             <p>{humanizeDuration(lecture.lectureDuration * 60 * 1000, { units: ['h', 'm'] })}</p>

@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import Loading from '../../components/student/Loading'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import type { Course } from '../../types/interfaces'
 
 const COURSES_PER_PAGE = 5;
 
 const MyCourses = () => {
     const { currency, isEducator, getToken, backendUrl } = useContext(AppContext);
 
-    const [courses, setCourses] = useState(null);
+    const [courses, setCourses] = useState<Course[] | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
 
     const fetchEducatorCourses = async () => {
@@ -23,7 +24,7 @@ const MyCourses = () => {
 
             if (data.success) setCourses(data.courses);
         } catch (error) {
-            toast.error(error.message);
+            toast.error((error as Error).message);
         }
     };
 
@@ -38,7 +39,7 @@ const MyCourses = () => {
     const startIndex = (currentPage - 1) * COURSES_PER_PAGE;
     const paginatedCourses = courses.slice(startIndex, startIndex + COURSES_PER_PAGE);
 
-    const handlePageChange = (page) => {
+    const handlePageChange = (page:number) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
         }

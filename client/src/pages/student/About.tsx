@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Footer from '../../components/student/Footer'
 import { assets } from '../../assets/assets'
 import { FaChalkboardTeacher, FaGlobe, FaBolt } from 'react-icons/fa'

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Footer from '../../components/student/Footer';
 
 const PrivacyPolicy = () => {
@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
         window.scrollTo(0, 0);
     }, []);
 
-    
+
     return (
         <div className='flex flex-col items-center space-y-7 text-center pt-4'>
             <h1 className='text-3xl font-bold'>Privacy Policy</h1>

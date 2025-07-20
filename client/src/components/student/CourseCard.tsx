@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { AppContext } from '../../context/AppContext'
 import { Link } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const CourseCard = ({ course }: any) => {
     const { currency, calculateRating }: any = useContext(AppContext)
     const rating = Math.floor(calculateRating(course))
-    const discountedPrice = (course.coursePrice - (course.discount * course.coursePrice) / 100).toFixed(2)
+    // const discountedPrice = (course.coursePrice - (course.discount * course.coursePrice) / 100).toFixed(2)
 
     return (
         <Link
@@ -34,7 +34,7 @@ const CourseCard = ({ course }: any) => {
                             />
                         ))}
                     </div>
-                    <p className='text-gray-500'>{course.courseRatings.length}</p>
+                    <p className='text-gray-500'>({course.courseRatings.length})</p>
                 </div>
                 <p className='text-base font-semibold text-gray-800'>{currency}{(course.coursePrice - course.discount * course.coursePrice / 100).toFixed(2)}</p>
 
@@ -45,3 +45,5 @@ const CourseCard = ({ course }: any) => {
 }
 
 export default CourseCard
+
+

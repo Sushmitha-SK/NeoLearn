@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import { assets } from '../../assets/assets'
 import Loading from '../../components/student/Loading'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import type { DashboardData, SummaryCardProps } from '../../types/interfaces'
 
 const Dashboard = () => {
   const { currency, isEducator, backendUrl, getToken } = useContext(AppContext)
-  const [dashboardData, setDashboardData] = useState(null)
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
 
   const fetchDashboardData = async () => {
     try {
@@ -24,7 +25,7 @@ const Dashboard = () => {
         toast.error(data.message)
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error((error as Error).message)
     }
   }
 
@@ -107,7 +108,7 @@ const Dashboard = () => {
   )
 }
 
-const SummaryCard = ({ icon, value, label }) => (
+const SummaryCard = ({ icon, value, label }: SummaryCardProps) => (
   <div className="flex items-center gap-4 p-5 bg-white rounded-xl shadow hover:shadow-md transition-shadow">
     <img src={icon} alt={label} className="w-12 h-12" />
     <div>

@@ -1,17 +1,18 @@
 // 
 
 
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import Loading from '../../components/student/Loading'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import type { EnrolledStudentData } from '../../types/interfaces'
 
 const ITEMS_PER_PAGE = 10;
 
 const StudentsEnrolled = () => {
     const { isEducator, backendUrl, getToken } = useContext(AppContext);
-    const [enrolledStudents, setEnrolledStudents] = useState(null);
+    const [enrolledStudents, setEnrolledStudents] = useState<EnrolledStudentData[] | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
 
     const fetchEnrolledStudents = async () => {
@@ -29,7 +30,7 @@ const StudentsEnrolled = () => {
                 toast.error(data.message);
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error((error as Error).message);
         }
     };
 
@@ -41,11 +42,13 @@ const StudentsEnrolled = () => {
 
     if (!enrolledStudents) return <Loading />;
 
+    console.log('enrolled students', enrolledStudents)
+
     const totalPages = Math.ceil(enrolledStudents.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const paginatedStudents = enrolledStudents.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-    const handlePageChange = (page) => {
+    const handlePageChange = (page: number) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
         }

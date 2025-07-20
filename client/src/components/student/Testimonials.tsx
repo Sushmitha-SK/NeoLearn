@@ -2,7 +2,7 @@ import { assets, dummyTestimonial } from '../../assets/assets'
 
 const Testimonials = () => {
     return (
-        <div className='pb-14 px-8 md:px-0'>
+        <div className='pb-14 px-8 md:px-0' id='testimonials'>
             <h2 className="text-4xl font-semibold text-gray-800 text-center">What Our Learners Say</h2>
             <p className="text-center text-gray-600 mt-4 md:text-base">
                 Hear from our learners as they share their journeys of transformation, success, and how our <br className="hidden md:block" />
@@ -32,14 +32,9 @@ const Testimonials = () => {
                                 {testimonial.feedback}
                             </p>
                         </div>
-
                     </div>
                 ))}
-
-
-
             </div>
-
         </div>
     )
 }

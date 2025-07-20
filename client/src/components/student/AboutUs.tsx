@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { assets } from '../../assets/assets';
 
 const AboutUs = () => {
+    const navigate = useNavigate()
     return (
         <section className="py-16 md:py-24 relative">
             <div className="w-full max-w-7xl px-4 mx-auto">
@@ -36,7 +38,6 @@ const AboutUs = () => {
                                 </p>
                             </div>
 
-                            {/* Statistics */}
                             <div className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-10">
                                 <div className="flex flex-col items-center lg:items-start">
                                     <h3 className="text-gray-900 text-3xl md:text-4xl font-bold font-manrope">33+</h3>
@@ -53,7 +54,7 @@ const AboutUs = () => {
                             </div>
                         </div>
                         <div className="w-full sm:w-auto">
-                            <button className="w-full sm:w-fit px-5 py-3 bg-primaryBlue hover:bg-secondaryHoverBlue transition-all duration-300 rounded-lg shadow justify-center items-center flex">
+                            <button onClick={() => navigate('/about')} className="w-full sm:w-fit px-5 py-3 bg-primaryBlue hover:bg-secondaryHoverBlue transition-all duration-300 rounded-lg shadow justify-center items-center flex">
                                 <span className="text-white text-sm font-medium">Explore NeoLearn</span>
                             </button>
                         </div>

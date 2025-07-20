@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import { assets } from '../../assets/assets'
 import Loading from '../../components/student/Loading'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import type { DashboardData, SummaryCardProps } from '../../types/interfaces'
 
 const Dashboard = () => {
   const { currency, isEducator, backendUrl, getToken } = useContext(AppContext)
-  const [dashboardData, setDashboardData] = useState(null)
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
 
   const fetchDashboardData = async () => {
     try {
@@ -24,7 +25,7 @@ const Dashboard = () => {
         toast.error(data.message)
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error((error as Error).message)
     }
   }
 
@@ -35,8 +36,7 @@ const Dashboard = () => {
   }, [isEducator])
 
   return dashboardData ? (
-    <div className="min-h-screen p-4 md:p-8 space-y-8 bg-gray-50">
-      {/* Summary Cards */}
+    <div className="min-h-screen p-4 md:p-8 space-y-8 ">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <SummaryCard
           icon={assets.patients_icon}
@@ -55,7 +55,6 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Latest Enrollments */}
       <div>
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Latest Enrollments
@@ -64,7 +63,7 @@ const Dashboard = () => {
           <table className="w-full text-sm text-left text-gray-700">
             <thead className="bg-gray-100 sticky top-0">
               <tr>
-                <th className="px-4 py-3 hidden sm:table-cell">#</th>
+                <th className="px-4 py-3 hidden sm:table-cell text-center">#</th>
                 <th className="px-4 py-3">Student Name</th>
                 <th className="px-4 py-3">Course Title</th>
               </tr>
@@ -107,7 +106,7 @@ const Dashboard = () => {
   )
 }
 
-const SummaryCard = ({ icon, value, label }) => (
+const SummaryCard = ({ icon, value, label }: SummaryCardProps) => (
   <div className="flex items-center gap-4 p-5 bg-white rounded-xl shadow hover:shadow-md transition-shadow">
     <img src={icon} alt={label} className="w-12 h-12" />
     <div>

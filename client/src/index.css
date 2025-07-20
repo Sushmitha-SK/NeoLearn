@@ -6,8 +6,6 @@
     font-family: "Inter", "Outfit", sans-serif;
 }
 
-
-
 @theme {
     --font-display: "Inter", "san-serif";
     --color-primary: #F4F6FB;
@@ -61,12 +59,45 @@
     @apply max-w-[424px]
 }
 
-
-
 .input-base {
-    @apply w-full rounded-lg focus:outline-none border border-gray-200 px-5 py-3 outline-none text-gray-900 placeholder-gray-400 text-sm font-normal focus:ring-2 focus:ring-gray-100 justify-start items-center gap-2 inline-flex;
+    @apply w-full rounded-lg focus:outline-none border border-gray-200 px-5 py-3 my-2 outline-none text-gray-900 placeholder-gray-400 text-sm font-normal focus:ring-2 focus:ring-gray-100 justify-start items-center gap-2 inline-flex;
 }
 
+
+.scrolltop {
+    position: fixed;
+    bottom: -100%;
+    right: 5rem;
+    background-color: var(--color-primary);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    color: var(--color-primaryBlue);
+    transition: var(--transition);
+    animation: scrolltopAnimation 2s linear infinite;
+    z-index: var(--zindex-fixed);
+    visibility: hidden;
+}
+
+.scrolltop--show {
+    bottom: 5rem;
+    visibility: visible;
+}
+
+@keyframes scrolltopAnimation {
+    0% {
+        box-shadow: 0px 0px 0px 10px rgba(72, 166, 167, 0.4);
+    }
+
+    100% {
+        box-shadow: 0px 0px 0px 40px rgb(113 67 245 / 1%);
+
+    }
+}
 
 .rich-text {
     font-size: 15px;

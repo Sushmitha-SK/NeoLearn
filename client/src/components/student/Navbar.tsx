@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { assets } from "../../assets/assets";
 import { Link, useLocation } from "react-router-dom";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
@@ -6,15 +6,19 @@ import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
 const Navbar = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("AppContext must be used within an AppContextProvider");
+  }
+
   const {
     navigate,
     isEducator,
     backendUrl,
     setIsEducator,
     getToken,
-  } = useContext(AppContext);
+  } = context;
 
   const location = useLocation();
   const isCourseListPage = location.pathname.includes("/course-list");
@@ -54,7 +58,7 @@ const Navbar = () => {
         toast.success(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error((error as Error).message);
     }
   };
 

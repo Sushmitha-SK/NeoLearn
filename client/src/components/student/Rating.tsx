@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { RatingProps } from '../../types/interfaces';
 
-const Rating = ({ initialRating, onRate }) => {
+const Rating = ({ initialRating = 0, onRate }: RatingProps) => {
     const [rating, setRating] = useState(initialRating || 0)
 
-    const handleRating = (value) => {
+    const handleRating = (value: any) => {
         setRating(value);
         if (onRate) onRate(value)
     }

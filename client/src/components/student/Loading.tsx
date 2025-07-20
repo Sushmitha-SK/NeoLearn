@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { PropagateLoader } from 'react-spinners'
 
 const Loading = () => {
-
     const { path } = useParams()
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (path) {
             const timer = setTimeout(() => {
                 navigate(`/${path}`)
             }, 5000)
-            return () => clearTimeout(timer);
+            return () => clearTimeout(timer)
         }
-    }, [])
+    }, [path, navigate])
 
     return (
-        <div className='min-h-screen flex items-center justify-center'>
-            <div className='w-16 sm:w-20 aspect-square border-4 border-gray-300 border-t-4 border-t-blue-400 rounded-full animate-spin'></div>
+        <div className='min-h-screen flex items-center justify-center bg-white'>
+            <PropagateLoader color="#37AFE1" size={10} speedMultiplier={1} />
         </div>
     )
 }

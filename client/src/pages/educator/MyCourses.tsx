@@ -1,41 +1,51 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import Loading from '../../components/student/Loading'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import type { Course } from '../../types/interfaces'
+
+const COURSES_PER_PAGE = 5;
 
 const MyCourses = () => {
+    const { currency, isEducator, getToken, backendUrl } = useContext(AppContext);
 
-    const { currency, isEducator, getToken, backendUrl } = useContext(AppContext)
-
-    const [courses, setCourses] = useState(null)
+    const [courses, setCourses] = useState<Course[] | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const fetchEducatorCourses = async () => {
         try {
-            const token = await getToken()
+            const token = await getToken();
             const { data } = await axios.get(backendUrl + '/api/educator/courses', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            })
+            });
 
-            data.success && setCourses(data.courses)
-
+            if (data.success) setCourses(data.courses);
         } catch (error) {
-            toast.error(error.message)
+            toast.error((error as Error).message);
         }
-    }
+    };
+
     useEffect(() => {
-        if (isEducator) {
-            fetchEducatorCourses()
+        if (isEducator) fetchEducatorCourses();
+    }, [isEducator]);
+
+    if (!courses) return <Loading />;
+
+    const totalPages = Math.ceil(courses.length / COURSES_PER_PAGE);
+    const startIndex = (currentPage - 1) * COURSES_PER_PAGE;
+    const paginatedCourses = courses.slice(startIndex, startIndex + COURSES_PER_PAGE);
+
+    const handlePageChange = (page:number) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
         }
+    };
 
-    }, [isEducator])
-
-
-    return courses ? (
-
-        <div className='h-screen flex flex-col items-start justify-between md:p-8 md:pb-0 p-4 pt-8 pb-0'>
+    return (
+        <div className='min-h-screen flex flex-col items-start justify-between md:p-8 md:pb-0 p-4 pt-8 pb-0'>
             <div className='w-full'>
                 <h2 className="pb-4 text-xl font-semibold text-gray-800">My Courses</h2>
                 <div className='w-full overflow-x-auto'>
@@ -50,7 +60,7 @@ const MyCourses = () => {
                                 </tr>
                             </thead>
                             <tbody className='divide-y divide-gray-100'>
-                                {courses.map((course) => (
+                                {paginatedCourses.map((course) => (
                                     <tr key={course._id} className='hover:bg-gray-50 transition'>
                                         <td className='px-6 py-4 flex items-center space-x-4'>
                                             <img src={course.courseThumbnail} alt="Thumbnail" className='w-12 h-12 rounded object-cover border' />
@@ -67,10 +77,35 @@ const MyCourses = () => {
                         </table>
                     </div>
                 </div>
+
+                <div className="flex justify-end items-center gap-2 mt-4">
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-3 py-1 rounded text-sm border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+                    >
+                        Previous
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                            key={i + 1}
+                            onClick={() => handlePageChange(i + 1)}
+                            className={`px-3 py-1 rounded text-sm border ${currentPage === i + 1 ? 'bg-primaryBlue text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-1 rounded text-sm border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
+    );
+};
 
-    ) : <Loading />
-}
-
-export default MyCourses
+export default MyCourses;

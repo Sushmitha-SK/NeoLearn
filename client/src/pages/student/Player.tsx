@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useParams } from 'react-router-dom'
 import humanizeDuration from 'humanize-duration'
@@ -9,16 +9,17 @@ import Rating from '../../components/student/Rating'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import Loading from '../../components/student/Loading'
+import type { Course, PlayerDataResponse, ProgressData } from '../../types/interfaces'
 
 
 const Player = () => {
     const { enrolledCourses, calculateChapterTime, userData, backendUrl, getToken, fetchUserEnrolledCourses } = useContext(AppContext)
 
     const { courseId } = useParams()
-    const [courseData, setCourseData] = useState(null)
-    const [progressData, setProgressData] = useState(null)
-    const [openSections, setOpenSections] = useState({})
-    const [playerData, setPlayerData] = useState(null)
+    const [courseData, setCourseData] = useState<Course | null>(null)
+    const [progressData, setProgressData] = useState<ProgressData | null>(null)
+    const [openSections, setOpenSections] = useState<Record<number, boolean>>({})
+    const [playerData, setPlayerData] = useState<PlayerDataResponse | null>(null)
     const [initialRating, setInitialRating] = useState(0)
 
     const getCourseData = () => {
@@ -27,14 +28,14 @@ const Player = () => {
                 setCourseData(course)
 
             course.courseRatings.map((item) => {
-                if (item.userId === userData._id) {
+                if (item.userId === userData?._id) {
                     setInitialRating(item.rating)
                 }
             })
         })
     }
 
-    const toggleSection = (index) => {
+    const toggleSection = (index: number) => {
         setOpenSections((prev) => (
             {
                 ...prev,
@@ -51,7 +52,7 @@ const Player = () => {
     }, [enrolledCourses])
 
 
-    const markLectureAsCompleted = async (lectureId) => {
+    const markLectureAsCompleted = async (lectureId: string) => {
         try {
             const token = await getToken()
             const { data } = await axios.post(backendUrl + '/api/user/update-course-progress', {
@@ -69,7 +70,7 @@ const Player = () => {
                 toast.error(data.message)
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error((error as Error).message)
         }
     }
 
@@ -92,7 +93,7 @@ const Player = () => {
                 toast.error(data.message)
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error((error as Error).message)
         }
     }
 
@@ -100,8 +101,7 @@ const Player = () => {
         getCourseProgress()
     }, [])
 
-
-    const handleRate = async (rating) => {
+    const handleRate = async (rating: number) => {
         try {
             const token = await getToken()
             const { data } = await axios.post(backendUrl + '/api/user/add-rating', {
@@ -119,7 +119,7 @@ const Player = () => {
                 toast.error(data.message)
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error((error as Error).message)
         }
     }
 

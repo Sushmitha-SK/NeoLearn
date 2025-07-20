@@ -34,6 +34,8 @@ NeoLearn is a modern full-stack e-learning platform where educators can create a
 
 - **Students Enrolled**: Shows a paginated list of enrolled students with their names, course titles, and enrollment dates—helping educators track engagement easily.
 
+- **Contact Form with Web3Forms**: A fully functional contact form powered by Web3Forms allows users to reach out directly from the web app. No backend logic required—submissions are sent securely via Web3Forms API with built-in spam protection and email delivery.
+
 - **Responsive Design**: Ensures the app adapts smoothly to different screen sizes, providing an optimal experience on all devices.
 
 ---

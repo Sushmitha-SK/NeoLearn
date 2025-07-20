@@ -6,7 +6,7 @@ NeoLearn is a modern full-stack e-learning platform where educators can create a
 
 ## 🌐 Live URL & Repository
 
-- **Frontend Live Application**: [http://localhost:5173/](http://localhost:5173/) 
+- **Frontend Live Application**: [https://neo-learn-space.vercel.app/](https://neo-learn-space.vercel.app/)
 - **Backend API**: [https://neo-learn-server.vercel.app/](https://neo-learn-server.vercel.app/)
 - **GitHub Repository**: [https://github.com/Sushmitha-SK/NeoLearn.git](https://github.com/Sushmitha-SK/NeoLearn.git)
 
@@ -186,7 +186,7 @@ Make sure you have the following installed:
 
 ---
 
-### 1️⃣ Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Sushmitha-SK/NeoLearn.git
@@ -195,7 +195,7 @@ cd NeoLearn
 
 ---
 
-### 2️⃣ Install Dependencies
+### 2. Install Dependencies
 
 #### Frontend
 
@@ -213,7 +213,7 @@ npm install
 
 ---
 
-### 3️⃣ Set Up Environment Variables
+### 3. Set Up Environment Variables
 
 #### Frontend (`client/.env`)
 
@@ -243,7 +243,7 @@ CURRENCY=your_currency_symbol
 
 ---
 
-### 4️⃣ Start the Development Servers
+### 4. Start the Development Servers
 
 #### Backend
 
@@ -261,7 +261,7 @@ npm run dev
 
 ---
 
-### 5️⃣ Visit the App
+### 5. Visit the App
 
 Now open your browser and go to:
 

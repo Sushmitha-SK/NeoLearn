@@ -70,7 +70,6 @@ const About = () => {
                                     </p>
                                 </div>
 
-                                {/* Statistics */}
                                 <div className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-10">
                                     <div className="flex flex-col items-center lg:items-start">
                                         <h3 className="text-gray-900 text-3xl md:text-4xl font-bold font-manrope">33+</h3>

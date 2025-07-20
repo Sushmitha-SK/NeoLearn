@@ -41,8 +41,6 @@ export interface Course {
     __v: number;
 }
 
-
-
 export interface User {
     _id: string;
     name: string;
@@ -53,7 +51,6 @@ export interface User {
     updatedAt: string;
     __v: number;
 }
-
 
 export interface Lecture {
     lectureId: string;
@@ -94,7 +91,6 @@ export interface ProgressData {
     courseId: string;
     completed: boolean;
     lectureCompleted: string[];
-
 }
 
 export interface PlayerDataResponse extends Lecture {

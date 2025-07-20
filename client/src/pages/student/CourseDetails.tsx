@@ -104,7 +104,6 @@ const CourseDetails = () => {
                         className='pt-4 md:text-base text-sm'
                         dangerouslySetInnerHTML={{ __html: courseData.courseDescription.slice(0, 200) }}
                     />
-                    {/* Review and Ratings */}
                     <div className='flex items-center space-x-2 pt-3 pb-1 text-sm'>
                         <p>{calculateRating(courseData)}</p>
                         <div className='flex'>

@@ -6,13 +6,12 @@ import { Link } from 'react-router-dom'
 const CourseCard = ({ course }: any) => {
     const { currency, calculateRating }: any = useContext(AppContext)
     const rating = Math.floor(calculateRating(course))
-    // const discountedPrice = (course.coursePrice - (course.discount * course.coursePrice) / 100).toFixed(2)
 
     return (
         <Link
             to={`/course/${course._id}`}
             onClick={() => scrollTo(0, 0)}
-            className='group border border-gray-200 rounded-2xl overflow-hidden shadow-sm bg-white'
+            className='group border border-gray-200 rounded-2xl overflow-hidden shadow-sm bg-white my-4 mx-1'
         >
             <img
                 src={course.courseThumbnail}

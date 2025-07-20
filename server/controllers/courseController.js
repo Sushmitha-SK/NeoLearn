@@ -4,11 +4,11 @@ import Course from '../models/Course.js'
 export const getAllCourse = async (req, res) => {
     try {
         const {
-            search = "",              
-            sort = "createdAt",     
-            order = "desc",          
-            page = 1,                 
-            limit = 10               
+            search = "",
+            sort = "createdAt",
+            order = "desc",
+            page = 1,
+            limit = 10
         } = req.query;
 
         const query = {
@@ -42,15 +42,11 @@ export const getAllCourse = async (req, res) => {
     }
 };
 
-
-
 //Get course by Id
 export const getCourseById = async (req, res) => {
     const { id } = req.params
     try {
         const courseData = await Course.findById(id).populate({ path: 'educator' })
-
-        //Remove lectureUrl if isPreviewFree is false
         courseData.courseContent.forEach(chapter => {
             chapter.chapterContent.forEach(lecture => {
                 if (!lecture.isPreviewFree) {

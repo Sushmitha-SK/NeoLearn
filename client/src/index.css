@@ -6,8 +6,6 @@
     font-family: "Inter", "Outfit", sans-serif;
 }
 
-
-
 @theme {
     --font-display: "Inter", "san-serif";
     --color-primary: #F4F6FB;
@@ -100,7 +98,6 @@
 
     }
 }
-
 
 .rich-text {
     font-size: 15px;

@@ -6,15 +6,7 @@ import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
 const Navbar = () => {
-  // const {
-  //   navigate,
-  //   isEducator,
-  //   backendUrl,
-  //   setIsEducator,
-  //   getToken,
-  // } = useContext(AppContext);
   const context = useContext(AppContext);
   if (!context) {
     throw new Error("AppContext must be used within an AppContextProvider");

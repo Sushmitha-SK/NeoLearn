@@ -6,7 +6,6 @@ import CourseCard from './CourseCard'
 const CoursesSection = () => {
     const { allCourses } = useContext(AppContext)
     
-
     return (
         <div className='py-16 md:px-40 px-8' id="courses">
             <h2 className=' text-4xl font-semibold text-gray-800 text-center'>Learn from the best</h2>

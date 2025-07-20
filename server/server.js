@@ -16,13 +16,13 @@ const startServer = async () => {
 
         const app = express()
 
-        // Stripe webhook route (MUST be first + raw)
+        // Stripe webhook route 
         app.post('/api/webhook/stripe', express.raw({ type: 'application/json' }), stripeWebhooks)
 
         // Middleware
         app.use(cors())
 
-        // 🛠 Conditional Clerk middleware (skip on Stripe webhook)
+        // Conditional Clerk middleware (
         app.use((req, res, next) => {
             if (req.originalUrl === '/api/webhook/stripe') {
                 return next();
@@ -30,7 +30,6 @@ const startServer = async () => {
             return clerkMiddleware()(req, res, next);
         });
 
-        // JSON parsing AFTER raw
         app.use(express.json())
 
         // Routes

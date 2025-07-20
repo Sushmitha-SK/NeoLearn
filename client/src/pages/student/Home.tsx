@@ -8,9 +8,7 @@ import Footer from '../../components/student/Footer'
 import AboutUs from '../../components/student/AboutUs'
 import { TiArrowSortedUp } from "react-icons/ti";
 
-
 const Home = () => {
-
     const [showScrollTop, setShowScrollTop] = useState(false);
 
     useEffect(() => {

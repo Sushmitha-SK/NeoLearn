@@ -101,9 +101,6 @@ const Player = () => {
         getCourseProgress()
     }, [])
 
-
-    // const handleRate = async (rating: CourseRating) => {
-    // const handleRate = async (rating: { rating: number }) => {
     const handleRate = async (rating: number) => {
         try {
             const token = await getToken()
@@ -167,10 +164,7 @@ const Player = () => {
                     </div>
                     <div className='flex items-center gap-2 py-3 mt-10'>
                         <h1 className='text-xl font-bold'>Rate this Course:</h1>
-                        <Rating initialRating={initialRating}
-                            // onRate={(value) => handleRate({ rating: value })} 
-                            onRate={handleRate}
-                        />
+                        <Rating initialRating={initialRating} onRate={handleRate} />
 
                     </div>
                 </div>

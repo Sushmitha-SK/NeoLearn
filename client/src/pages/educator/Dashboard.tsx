@@ -36,8 +36,7 @@ const Dashboard = () => {
   }, [isEducator])
 
   return dashboardData ? (
-    <div className="min-h-screen p-4 md:p-8 space-y-8 bg-gray-50">
-      {/* Summary Cards */}
+    <div className="min-h-screen p-4 md:p-8 space-y-8 ">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <SummaryCard
           icon={assets.patients_icon}
@@ -56,7 +55,6 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Latest Enrollments */}
       <div>
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Latest Enrollments

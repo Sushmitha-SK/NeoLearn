@@ -35,6 +35,7 @@ interface AppContextType {
     userData: User | null;
     enrolledCourses: Course[];
     fetchUserEnrolledCourses: () => Promise<void>;
+    fetchAllCourses: () => Promise<void>;
 }
 
 interface AppContextProviderProps {
@@ -66,14 +67,11 @@ const defaultContextValue: AppContextType = {
     calculateNoOfLectures: () => 0,
     userData: null,
     enrolledCourses: [],
-    fetchUserEnrolledCourses: async () => { }
+    fetchUserEnrolledCourses: async () => { },
+    fetchAllCourses: async () => { }
 };
 
 export const AppContext = createContext<AppContextType>(defaultContextValue);
-
-
-// export const AppContext = createContext<AppContextType | undefined>(undefined);
-
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const backendUrl = 'https://neo-learn-server.vercel.app'
@@ -89,14 +87,12 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     const [userData, setUserData] = useState<User | null>(null);
     const [searchInput, setSearchInput] = useState<string>("");
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(8); // Adjust per row count
+    const [limit, setLimit] = useState(8);
     const [sort, setSort] = useState("createdAt");
     const [order, setOrder] = useState("desc");
     const [totalPages, setTotalPages] = useState<number>(1);
 
-
     // Fetch all courses
-
     const fetchAllCourses = async (
         search: string = "",
         page: number = 1,
@@ -129,7 +125,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         }
     };
 
-
+    //Function to fetch user data
     const fetchUserData = async () => {
         if (user && user.publicMetadata?.role === 'educator') {
             setIsEducator(() => {
@@ -166,7 +162,6 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     }
 
     //Function to calculate chapter time
-
     const calculateChapterTime = (chapter: { chapterContent: any[]; }) => {
         let time = 0
         chapter.chapterContent.map((lecture: { lectureDuration: number; }) => time += lecture.lectureDuration)
@@ -174,7 +169,6 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     }
 
     //Function to calculate course duration
-
     const calculateCourseDuration = (course: { courseContent: any[]; }) => {
         let time = 0
         course.courseContent.map((chapter: { chapterContent: any[]; }) => chapter.chapterContent.map((lecture: { lectureDuration: number; }) => time += lecture.lectureDuration))
@@ -182,7 +176,6 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     }
 
     //Function to calculate no of lectures in the course
-
     const calculateNoOfLectures = (course: { courseContent: any[]; }) => {
         let totalLectures = 0;
         course.courseContent.forEach((chapter: { chapterContent: string | any[]; }) => {
@@ -209,7 +202,6 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
                 toast.error(data.message)
             }
         } catch (error) {
-            // toast.error(error.message)
             toast.error((error as Error).message)
         }
     }

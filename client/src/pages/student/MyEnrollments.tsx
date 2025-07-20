@@ -6,7 +6,6 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import type { ProgressArray } from '../../types/interfaces'
 
-
 const MyEnrollments = () => {
     const { enrolledCourses, calculateCourseDuration, calculateNoOfLectures, navigate, getToken, backendUrl, userData, fetchUserEnrolledCourses } = useContext(AppContext)
     const [progressArray, setProgressArray] = useState<ProgressArray[]>([])
@@ -53,7 +52,7 @@ const MyEnrollments = () => {
     return (
         <>
             <div className='md:px-36 px-4 pt-10 pb-20'>
-                <h1 className='text-3xl font-bold text-gray-800 mb-8'>My Enrollments</h1>
+                <h1 className='text-xl font-semibold text-gray-800 mb-8'>My Enrollments</h1>
                 <div className="overflow-x-auto rounded-lg shadow-md">
                     <table className='w-full table-auto text-sm text-left text-gray-700'>
                         <thead className='bg-gray-100 text-gray-900 uppercase text-xs font-semibold tracking-wide'>
@@ -108,7 +107,7 @@ const MyEnrollments = () => {
                                                 <button
                                                     className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide shadow-sm ${isCompleted
                                                         ? 'bg-green-600 hover:bg-green-700 text-white'
-                                                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                                        : 'bg-primaryBlue hover:bg-secondaryHoverBlue text-white'
                                                         }`}
                                                     onClick={() => navigate('/player/' + course._id)}
                                                 >

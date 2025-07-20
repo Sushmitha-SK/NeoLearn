@@ -1,7 +1,6 @@
 import { assets } from '../../assets/assets'
 
 const Companies = () => {
-
     return (
         <div className='pt-16'>
             <p className='text-base text-gray-500'>Trusted by learners from</p>

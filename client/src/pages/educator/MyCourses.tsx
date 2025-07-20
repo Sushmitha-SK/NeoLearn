@@ -34,7 +34,6 @@ const MyCourses = () => {
 
     if (!courses) return <Loading />;
 
-    // Pagination logic
     const totalPages = Math.ceil(courses.length / COURSES_PER_PAGE);
     const startIndex = (currentPage - 1) * COURSES_PER_PAGE;
     const paginatedCourses = courses.slice(startIndex, startIndex + COURSES_PER_PAGE);
@@ -79,7 +78,6 @@ const MyCourses = () => {
                     </div>
                 </div>
 
-                {/* Pagination Controls */}
                 <div className="flex justify-end items-center gap-2 mt-4">
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}

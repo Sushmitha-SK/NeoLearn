@@ -1,6 +1,3 @@
-// 
-
-
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/AppContext'
 import Loading from '../../components/student/Loading'
@@ -88,7 +85,6 @@ const StudentsEnrolled = () => {
                     </table>
                 </div>
 
-                {/* Pagination Controls */}
                 <div className="flex justify-end items-center gap-2 mt-4">
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
@@ -102,7 +98,7 @@ const StudentsEnrolled = () => {
                             key={i + 1}
                             onClick={() => handlePageChange(i + 1)}
                             className={`px-3 py-1 rounded text-sm border 
-                                ${currentPage === i + 1 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                                ${currentPage === i + 1 ? 'bg-primaryBlue text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
                         >
                             {i + 1}
                         </button>

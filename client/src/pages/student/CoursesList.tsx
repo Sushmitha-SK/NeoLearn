@@ -8,7 +8,6 @@ import Footer from '../../components/student/Footer'
 import type { Course } from '../../types/interfaces'
 
 const CoursesList = () => {
-
     const { navigate, allCourses, searchInput, setSearchInput, page, setPage, sort, setSort, order, setOrder, totalPages } = useContext(AppContext)
     const { input } = useParams()
 
@@ -34,7 +33,7 @@ const CoursesList = () => {
 
                 <div className='flex md:flex-row flex-col gap-6 items-start justify-between w-full'>
                     <div>
-                        <h1 className='text-4xl font-semibold text-gray-800'>Course List</h1>
+                        <h1 className='text-2xl font-semibold text-gray-800'>Course List</h1>
                         <p className='text-gray-500 mt-3'>
                             <span className='text-primaryBlue cursor-pointer' onClick={() => navigate('/')}>Home</span>
                             {' '}/{' '}
@@ -101,15 +100,15 @@ const CoursesList = () => {
                 {totalPages > 1 && (
                     <div className="flex justify-center items-center gap-4 my-6">
                         <button
-                            className="px-4 py-2 border rounded disabled:opacity-50"
+                            className="px-4 py-2 border border-gray-400 rounded disabled:opacity-50"
                             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                             disabled={page === 1}
                         >
                             Prev
                         </button>
-                        <span className="font-semibold">Page {page}</span>
+                        <span className="font-semibold text-secondaryHoverBlue">Page {page}</span>
                         <button
-                            className="px-4 py-2 border rounded disabled:opacity-50"
+                            className="px-4 py-2 border  border-gray-400 rounded disabled:opacity-50"
                             onClick={() => setPage((prev) => prev + 1)}
                             disabled={page >= totalPages}
                         >

@@ -1,9 +1,4 @@
-import React, {
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import uniqid from 'uniqid'
 import Quill from 'quill'
@@ -12,7 +7,6 @@ import { AppContext } from '../../context/AppContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import type { Chapter } from '../../types/interfaces'
-
 
 const FormField = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <label className="space-y-1 w-full py-2 ">
@@ -33,13 +27,13 @@ const useEsc = (handler: () => void) => {
 
 
 const AddCourse = () => {
-    const { backendUrl, getToken } = useContext(AppContext)
+    const { backendUrl, getToken, fetchAllCourses } = useContext(AppContext)
 
     const quillRef = useRef<Quill | null>(null);
     const editorRef = useRef<HTMLDivElement>(null)
 
     const [courseTitle, setCourseTitle] = useState('')
-    const [coursePrice, setCoursePrice] = useState<number>(0)
+    const [coursePrice, setCoursePrice] = useState<number>(0.0)
     const [discount, setDiscount] = useState<number>(0)
     const [image, setImage] = useState<File | null>(null)
 
@@ -152,6 +146,7 @@ const AddCourse = () => {
                 setImage(null)
                 setChapters([])
                 quillRef.current!.root.innerHTML = ''
+                fetchAllCourses()
             } else toast.error(data.message)
         } catch (err: any) {
             toast.error(err.message)
@@ -187,13 +182,15 @@ const AddCourse = () => {
                                 />
                             </FormField>
 
+
                             <FormField label="Course Price">
                                 <input
                                     type="number"
                                     value={coursePrice}
-                                    onChange={(e) => setCoursePrice(+e.target.value)}
+                                    onChange={(e) => setCoursePrice(parseFloat(e.target.value))}
                                     required
                                     min={0}
+                                    step="0.01"
                                     className="input-base"
                                 />
                             </FormField>
@@ -204,7 +201,7 @@ const AddCourse = () => {
                                     min={0}
                                     max={100}
                                     value={discount}
-                                    onChange={(e) => setDiscount(+e.target.value)}
+                                    onChange={(e) => setDiscount(parseInt(e.target.value))}
                                     className="input-base"
                                 />
                             </FormField>
@@ -291,7 +288,7 @@ const AddCourse = () => {
                                             )}
                                         </div>
 
-                                        <span className="rounded-full bg-blue-50 px-3 py-1 text-xs text-blue-600">
+                                        <span className="rounded-full bg-blue-50 px-3 py-1 text-xs text-primaryBlue">
                                             {chapter.chapterContent.length} Lectures
                                         </span>
 
@@ -313,7 +310,7 @@ const AddCourse = () => {
                                                         <a
                                                             href={lec.lectureUrl}
                                                             target="_blank"
-                                                            className="text-blue-600 underline"
+                                                            className="text-secondaryHoverBlue underline"
                                                         >
                                                             link
                                                         </a>{' '}
@@ -335,7 +332,7 @@ const AddCourse = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => openModal(chapter.chapterId)}
-                                                className="mt-2 inline-flex items-center gap-1 rounded-md bg-blue-50 px-3 py-1 text-sm text-blue-600 hover:bg-blue-100"
+                                                className="mt-2 inline-flex items-center gap-1 rounded-md bg-blue-50 px-3 py-1 text-sm text-primaryBlue hover:bg-blue-100"
                                             >
                                                 + Add Lecture
                                             </button>
@@ -344,20 +341,11 @@ const AddCourse = () => {
                                 </article>
                             ))}
 
-                            <button
-                                type="button"
-                                onClick={addChapter}
-                                className="rounded-lg bg-gray-200 py-2 text-center font-medium hover:bg-gray-300 px-2 cursor-pointer"
-                            >
+                            <button type="button" onClick={addChapter} className="rounded-lg bg-gray-200 py-2 text-center font-medium hover:bg-gray-300 px-2 cursor-pointer">
                                 + Add Chapter
                             </button>
                         </div>
-
-                        {/* submit */}
-                        <button
-                            type="submit"
-                            className="self-start rounded-lg bg-blue-600 px-8 py-2.5 text-white transition hover:brightness-110"
-                        >
+                        <button type="submit" className="self-start rounded-lg bg-primaryBlue px-8 py-2.5 text-white transition hover:brightness-110 mb-4">
                             Add Course
                         </button>
                     </form>
@@ -421,7 +409,7 @@ const AddCourse = () => {
                                 <div className="mt-6 flex gap-3">
                                     <button
                                         onClick={addLecture}
-                                        className="flex-1 rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700"
+                                        className="flex-1 rounded-lg bg-primaryBlue py-2 text-white hover:bg-secondaryHoverBlue"
                                     >
                                         Add
                                     </button>
